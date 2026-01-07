@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOE LỚP 4 - ĐỀ SỐ 09</title>
+    <title>LUYỆN THI IOE LỚP 4 - ĐỀ SỐ 09</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -61,7 +61,7 @@
     <script type="text/babel">
       const { useState, useEffect, useRef, useMemo } = React;
 
-      const TOTAL_TIME = 35 * 60; // 35 phút
+      const TOTAL_TIME = 35 * 60; 
       const POINTS_PER_CORRECT = 10;
 
       const QuestionType = {
@@ -73,51 +73,50 @@
       const GameState = { START: 'START', PLAYING: 'PLAYING', FINISHED: 'FINISHED' };
 
       const RAW_QUESTIONS = [
-        { id: 1, type: QuestionType.FILL_IN_BLANK, text: "___ John at home yesterday?", answer: "Was", exp: "Dùng 'Was' cho câu hỏi quá khứ đơn với chủ ngữ số ít." },
-        { id: 2, type: QuestionType.REARRANGE, parts: ["What", "do", "you", "like", "doing?"], answer: "What do you like doing?", exp: "Cấu trúc hỏi sở thích: What + do/does + S + like + V-ing?" },
-        { id: 3, type: QuestionType.REARRANGE, parts: ["Can", "she", "read", "a", "book?"], answer: "Can she read a book?", exp: "Cấu trúc hỏi khả năng: Can + S + V?" },
-        { id: 4, type: QuestionType.FILL_IN_BLANK, text: "She has three ______ on her desk.", img: "https://images.unsplash.com/photo-1550985543-49bee3167284?w=400", answer: "rulers", exp: "Số nhiều của ruler là rulers." },
-        { id: 5, type: QuestionType.MULTIPLE_CHOICE, text: "Can Nam play table tennis? – Yes, he ___.", options: ["can", "can’t", "canot", "cannot"], answer: "can", exp: "Trả lời khẳng định cho câu hỏi Can là 'Yes, S + can'." },
-        { id: 6, type: QuestionType.MULTIPLE_CHOICE, text: "She is ... Japan.", options: ["down", "up", "from", "under"], answer: "from", exp: "Be from: đến từ đâu đó." },
-        { id: 7, type: QuestionType.MULTIPLE_CHOICE, text: "What subjects do you ___ ? – I don’t like Maths and Art.", options: ["dislike", "like", "don’t like", "love"], answer: "like", exp: "Hỏi sở thích môn học: What subjects do you like?" },
-        { id: 8, type: QuestionType.MULTIPLE_CHOICE, text: "Peter can … a bike.", options: ["ride", "play", "stay", "drink"], answer: "ride", exp: "Ride a bike: đi xe đạp." },
-        { id: 9, type: QuestionType.FILL_IN_BLANK, text: "S_ ORT", answer: "P", exp: "Từ vựng: Sport (thể thao)." },
-        { id: 10, type: QuestionType.FILL_IN_BLANK, text: "A: Good n_ _ _ _ , Mom. - B: Have a good sleep, my son.", answer: "night", exp: "Chúc ngủ ngon: Good night." },
-        { id: 11, type: QuestionType.REARRANGE, parts: ["Happy", "birthday", "to", "you,", "Jenny."], answer: "Happy birthday to you, Jenny.", exp: "Lời chúc mừng sinh nhật." },
-        { id: 12, type: QuestionType.FILL_IN_BLANK, text: "FRIE_ D", answer: "N", exp: "Từ vựng: Friend (bạn bè)." },
-        { id: 13, type: QuestionType.FILL_IN_BLANK, text: "What is your h_ _ _ y? – I like drawing.", answer: "hobby", exp: "Hobby: sở thích." },
-        { id: 14, type: QuestionType.REARRANGE, parts: ["This", "is", "my birthday", "party."], answer: "This is my birthday party.", exp: "Giới thiệu bữa tiệc sinh nhật." },
-        { id: 15, type: QuestionType.REARRANGE, parts: ["I’m", "very", "well,", "too."], answer: "I’m very well, too.", exp: "Phản hồi sức khỏe: Tớ cũng rất khỏe." },
-        { id: 16, type: QuestionType.FILL_IN_BLANK, text: "All the water in the oceans and _ _ _ _ is salt water.", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2018/11/29/636790887695176741_Audio.mp3", answer: "sea", exp: "Sea: biển. Nước biển mặn." },
-        { id: 17, type: QuestionType.FILL_IN_BLANK, text: "Where ___ the dolls?", answer: "are", exp: "The dolls là số nhiều nên dùng are." },
-        { id: 18, type: QuestionType.FILL_IN_BLANK, text: "He is from _________ .", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2013/11/21/635206402675416532_Audio.mp3", answer: "Singapore", exp: "Nghe địa danh: Singapore." },
-        { id: 19, type: QuestionType.FILL_IN_BLANK, text: "Please ____ me some more sugar.", answer: "give", exp: "Give me: đưa cho tôi." },
-        { id: 20, type: QuestionType.MULTIPLE_CHOICE, text: "Mary and Linda are ... .", img: "https://images.unsplash.com/photo-1574348996587-27da2f36ec46?w=400", options: ["painting pictures", "making puppets", "making boats", "painting masks"], answer: "making puppets", exp: "Nhìn hình: Hai bạn đang làm con rối." },
-        { id: 21, type: QuestionType.MULTIPLE_CHOICE, text: "Are the books on the table? – Yes, they ... .", options: ["am", "is", "are", "to"], answer: "are", exp: "They are là câu trả lời cho Are they...?" },
-        { id: 22, type: QuestionType.MULTIPLE_CHOICE, text: "Let’s draw a picture of a ... .", img: "https://images.unsplash.com/photo-1719027103866-feacf3a4f679?w=400", options: ["dog", "fish", "cat", "Monkey"], answer: "Monkey", exp: "Nhìn hình: Chú khỉ (Monkey)." },
-        { id: 23, type: QuestionType.REARRANGE, parts: ["Open", "your", "book,", "please."], answer: "Open your book, please.", exp: "Câu mệnh lệnh: Hãy mở sách ra." },
-        { id: 24, type: QuestionType.FILL_IN_BLANK, text: "Her father raises cows, sheep and _ _ _ _ _ on his farm.", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2016/12/1/636161990907660300_Audio.mp3", answer: "goats", exp: "Goats: con dê." },
-        { id: 25, type: QuestionType.FILL_IN_BLANK, text: "Is he strong or _ _ _ _ ?", answer: "weak", exp: "Trái nghĩa với strong (mạnh) là weak (yếu)." },
-        { id: 26, type: QuestionType.MULTIPLE_CHOICE, text: "Chọn từ khác loại:", options: ["chair", "monkey", "rabbit", "fish"], answer: "chair", exp: "Chair là đồ vật, còn lại là động vật." },
-        { id: 27, type: QuestionType.FILL_IN_BLANK, text: "Everyday, I ____ up early to do morning exercises.", answer: "get", exp: "Get up: thức dậy." },
-        { id: 28, type: QuestionType.FILL_IN_BLANK, text: "____ are you? - I’m fine, thanks.", answer: "How", exp: "How are you? là câu hỏi sức khỏe." },
-        { id: 29, type: QuestionType.FILL_IN_BLANK, text: "I wa_ born in October.", answer: "s", exp: "I was born: tôi sinh ra vào." },
-        { id: 30, type: QuestionType.REARRANGE, parts: ["I like", "playing", "football", "in", "the rain."], answer: "I like playing football in the rain.", exp: "Sở thích chơi bóng đá dưới mưa." },
-        { id: 31, type: QuestionType.MULTIPLE_CHOICE, text: "What _______ does Anh have? – She has three yo-yos.", options: ["books", "pens", "pets", "toys"], answer: "toys", exp: "Yo-yo là đồ chơi (toys)." },
-        { id: 32, type: QuestionType.MULTIPLE_CHOICE, text: "Where is Mary from?", options: ["She’s from England.", "She from England.", "She does England.", "England from"], answer: "She’s from England.", exp: "Câu trả lời đúng cấu trúc: She's from + Country." },
-        { id: 33, type: QuestionType.REARRANGE, parts: ["My dad", "is", "short", "but", "handsome."], answer: "My dad is short but handsome.", exp: "Bố tớ thấp nhưng đẹp trai." },
-        { id: 34, type: QuestionType.REARRANGE, parts: ["I have", "Maths", "every day", "of", "the week."], answer: "I have Maths every day of the week.", exp: "Tớ học toán mỗi ngày trong tuần." },
-        { id: 35, type: QuestionType.FILL_IN_BLANK, text: "Their town is ____ .", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2016/12/1/636162028476800629_Audio.mp3", answer: "small", exp: "Nghe từ: small (nhỏ bé)." },
-        { id: 36, type: QuestionType.MULTIPLE_CHOICE, text: "Chọn từ có phần gạch chân phát âm khác:", options: ["Zoo", "School", "Book", "Food"], answer: "Book", exp: "Book phát âm /ʊ/, các từ còn lại phát âm /uː/." },
-        { id: 37, type: QuestionType.REARRANGE, parts: ["Mary", "is", "a student", "at", "Oxford Primary School."], answer: "Mary is a student at Oxford Primary School.", exp: "Mary là học sinh trường Oxford." },
-        { id: 38, type: QuestionType.FILL_IN_BLANK, text: "Thank you very m_ _ h.", answer: "much", exp: "Thank you very much: cảm ơn nhiều." },
-        { id: 39, type: QuestionType.FILL_IN_BLANK, text: "Her _________ food is ice-cream.", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2016/12/1/636161990316877921_Audio.mp3", answer: "favourite", exp: "Favourite: yêu thích nhất." },
-        { id: 40, type: QuestionType.FILL_IN_BLANK, text: "Write the sent_ _ ces.", answer: "en", exp: "Sentences: những câu văn." }
+        { id: 1, type: QuestionType.FILL_IN_BLANK, text: "___ John at home yesterday?", answer: "Was", exp: "Dùng 'Was' cho câu hỏi quá khứ đơn với chủ ngữ số ít.", hint: "Câu hỏi thì quá khứ của động từ To Be với 'John' (số ít)." },
+        { id: 2, type: QuestionType.REARRANGE, parts: ["What", "do", "you", "like", "doing?"], answer: "What do you like doing?", exp: "Cấu trúc hỏi sở thích: What + do/does + S + like + V-ing?", hint: "Bắt đầu bằng từ để hỏi 'What' và kết thúc bằng 'doing?'." },
+        { id: 3, type: QuestionType.REARRANGE, parts: ["Can", "she", "read", "a", "book?"], answer: "Can she read a book?", exp: "Cấu trúc hỏi khả năng: Can + S + V?", hint: "Câu hỏi bắt đầu với 'Can'." },
+        { id: 4, type: QuestionType.FILL_IN_BLANK, text: "She has three ______ on her desk.", img: "https://images.unsplash.com/photo-1550985543-49bee3167284?w=400", answer: "rulers", exp: "Số nhiều của ruler là rulers.", hint: "Từ này có 6 chữ cái, bắt đầu bằng 'r', nghĩa là cây thước." },
+        { id: 5, type: QuestionType.MULTIPLE_CHOICE, text: "Can Nam play table tennis? – Yes, he ___.", options: ["can", "can’t", "canot", "cannot"], answer: "can", exp: "Trả lời khẳng định cho câu hỏi Can là 'Yes, S + can'.", hint: "Câu trả lời 'Yes' luôn đi kèm với dạng khẳng định." },
+        { id: 6, type: QuestionType.MULTIPLE_CHOICE, text: "She is ... Japan.", options: ["down", "up", "from", "under"], answer: "from", exp: "Be from: đến từ đâu đó.", hint: "Giới từ chỉ xuất xứ, quê quán." },
+        { id: 7, type: QuestionType.MULTIPLE_CHOICE, text: "What subjects do you ___ ? – I don’t like Maths and Art.", options: ["dislike", "like", "don’t like", "love"], answer: "like", exp: "Hỏi sở thích môn học: What subjects do you like?", hint: "Câu trả lời là 'don't like' nên câu hỏi thường là 'do you like...?'." },
+        { id: 8, type: QuestionType.MULTIPLE_CHOICE, text: "Peter can … a bike.", options: ["ride", "play", "stay", "drink"], answer: "ride", exp: "Ride a bike: đi xe đạp.", hint: "Động từ đi kèm với 'bike' để chỉ việc lái xe đạp." },
+        { id: 9, type: QuestionType.FILL_IN_BLANK, text: "S_ ORT", answer: "P", exp: "Từ vựng: Sport (thể thao).", hint: "Chữ cái còn thiếu để tạo thành từ 'Thể thao'." },
+        { id: 10, type: QuestionType.FILL_IN_BLANK, text: "A: Good n_ _ _ _ , Mom. - B: Have a good sleep, my son.", answer: "night", exp: "Chúc ngủ ngon: Good night.", hint: "Lời chúc trước khi đi ngủ, có 5 chữ cái." },
+        { id: 11, type: QuestionType.REARRANGE, parts: ["Happy", "birthday", "to", "you,", "Jenny."], answer: "Happy birthday to you, Jenny.", exp: "Lời chúc mừng sinh nhật.", hint: "Câu chúc sinh nhật quen thuộc." },
+        { id: 12, type: QuestionType.FILL_IN_BLANK, text: "FRIE_ D", answer: "N", exp: "Từ vựng: Friend (bạn bè).", hint: "Chữ cái còn thiếu trong từ 'Người bạn'." },
+        { id: 13, type: QuestionType.FILL_IN_BLANK, text: "What is your h_ _ _ y? – I like drawing.", answer: "hobby", exp: "Hobby: sở thích.", hint: "Từ này có nghĩa là sở thích, bắt đầu bằng 'h' và kết thúc bằng 'y'." },
+        { id: 14, type: QuestionType.REARRANGE, parts: ["This", "is", "my birthday", "party."], answer: "This is my birthday party.", exp: "Giới thiệu bữa tiệc sinh nhật.", hint: "Bắt đầu bằng 'This'." },
+        { id: 15, type: QuestionType.REARRANGE, parts: ["I’m", "very", "well,", "too."], answer: "I’m very well, too.", exp: "Phản hồi sức khỏe: Tớ cũng rất khỏe.", hint: "Bắt đầu bằng chủ ngữ 'I'm'." },
+        { id: 16, type: QuestionType.FILL_IN_BLANK, text: "All the water in the oceans and _ _ _ _ is salt water.", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2018/11/29/636790887695176741_Audio.mp3", answer: "sea", exp: "Sea: biển. Nước biển mặn.", hint: "Từ có 3 chữ cái, nghĩa là biển." },
+        { id: 17, type: QuestionType.FILL_IN_BLANK, text: "Where ___ the dolls?", answer: "are", exp: "The dolls là số nhiều nên dùng are.", hint: "Động từ To Be đi với danh từ số nhiều 'dolls'." },
+        { id: 18, type: QuestionType.FILL_IN_BLANK, text: "He is from _________ .", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2013/11/21/635206402675416532_Audio.mp3", answer: "Singapore", exp: "Nghe địa danh: Singapore.", hint: "Tên một quốc gia ở Đông Nam Á, bắt đầu bằng 'S'." },
+        { id: 19, type: QuestionType.FILL_IN_BLANK, text: "Please ____ me some more sugar.", answer: "give", exp: "Give me: đưa cho tôi.", hint: "Động từ có 4 chữ cái, nghĩa là 'cho' hoặc 'đưa'." },
+        { id: 20, type: QuestionType.MULTIPLE_CHOICE, text: "Mary and Linda are ... .", img: "https://images.unsplash.com/photo-1574348996587-27da2f36ec46?w=400", options: ["painting pictures", "making puppets", "making boats", "painting masks"], answer: "making puppets", exp: "Nhìn hình: Hai bạn đang làm con rối.", hint: "Puppets nghĩa là những con rối." },
+        { id: 21, type: QuestionType.MULTIPLE_CHOICE, text: "Are the books on the table? – Yes, they ... .", options: ["am", "is", "are", "to"], answer: "are", exp: "They are là câu trả lời cho Are they...?", hint: "Chủ ngữ 'they' luôn đi với 'are'." },
+        { id: 22, type: QuestionType.MULTIPLE_CHOICE, text: "Let’s draw a picture of a ... .", img: "https://images.unsplash.com/photo-1719027103866-feacf3a4f679?w=400", options: ["dog", "fish", "cat", "Monkey"], answer: "Monkey", exp: "Nhìn hình: Chú khỉ (Monkey).", hint: "Con vật này thích ăn chuối." },
+        { id: 23, type: QuestionType.REARRANGE, parts: ["Open", "your", "book,", "please."], answer: "Open your book, please.", exp: "Câu mệnh lệnh: Hãy mở sách ra.", hint: "Bắt đầu bằng động từ 'Open'." },
+        { id: 24, type: QuestionType.FILL_IN_BLANK, text: "Her father raises cows, sheep and _ _ _ _ _ on his farm.", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2016/12/1/636161990907660300_Audio.mp3", answer: "goats", exp: "Goats: con dê.", hint: "Những con vật có sừng, bắt đầu bằng 'g', 5 chữ cái." },
+        { id: 25, type: QuestionType.FILL_IN_BLANK, text: "Is he strong or _ _ _ _ ?", answer: "weak", exp: "Trái nghĩa với strong (mạnh) là weak (yếu).", hint: "Từ trái nghĩa với 'strong', có 4 chữ cái." },
+        { id: 26, type: QuestionType.MULTIPLE_CHOICE, text: "Chọn từ khác loại:", options: ["chair", "monkey", "rabbit", "fish"], answer: "chair", exp: "Chair là đồ vật, còn lại là động vật.", hint: "Tìm từ không phải là con vật." },
+        { id: 27, type: QuestionType.FILL_IN_BLANK, text: "Everyday, I ____ up early to do morning exercises.", answer: "get", exp: "Get up: thức dậy.", hint: "Động từ đi cùng với 'up' để chỉ việc thức dậy." },
+        { id: 28, type: QuestionType.FILL_IN_BLANK, text: "____ are you? - I’m fine, thanks.", answer: "How", exp: "How are you? là câu hỏi sức khỏe.", hint: "Từ để hỏi về tình hình sức khỏe." },
+        { id: 29, type: QuestionType.FILL_IN_BLANK, text: "I wa_ born in October.", answer: "s", exp: "I was born: tôi sinh ra vào.", hint: "Chữ cái còn thiếu của 'was'." },
+        { id: 30, type: QuestionType.REARRANGE, parts: ["I like", "playing", "football", "in", "the rain."], answer: "I like playing football in the rain.", exp: "Sở thích chơi bóng đá dưới mưa.", hint: "Bắt đầu bằng 'I like'." },
+        { id: 31, type: QuestionType.MULTIPLE_CHOICE, text: "What _______ does Anh have? – She has three yo-yos.", options: ["books", "pens", "pets", "toys"], answer: "toys", exp: "Yo-yo là đồ chơi (toys).", hint: "Yo-yo thuộc nhóm đồ vật nào?" },
+        { id: 32, type: QuestionType.MULTIPLE_CHOICE, text: "Where is Mary from?", options: ["She’s from England.", "She from England.", "She does England.", "England from"], answer: "She’s from England.", exp: "Câu trả lời đúng cấu trúc: She's from + Country.", hint: "Cần có động từ To Be 'is' (viết tắt là 's)." },
+        { id: 33, type: QuestionType.REARRANGE, parts: ["My dad", "is", "short", "but", "handsome."], answer: "My dad is short but handsome.", exp: "Bố tớ thấp nhưng đẹp trai.", hint: "Bắt đầu với 'My dad'." },
+        { id: 34, type: QuestionType.REARRANGE, parts: ["I have", "Maths", "every day", "of", "the week."], answer: "I have Maths every day of the week.", exp: "Tớ học toán mỗi ngày trong tuần.", hint: "Bắt đầu với 'I have'." },
+        { id: 35, type: QuestionType.FILL_IN_BLANK, text: "Their town is ____ .", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2016/12/1/636162028476800629_Audio.mp3", answer: "small", exp: "Nghe từ: small (nhỏ bé).", hint: "Từ có 5 chữ cái, nghĩa là nhỏ." },
+        { id: 36, type: QuestionType.MULTIPLE_CHOICE, text: "Chọn từ có phần gạch chân phát âm khác:", options: ["Zoo", "School", "Book", "Food"], answer: "Book", exp: "Book phát âm /ʊ/, các từ còn lại phát âm /uː/.", hint: "Để ý âm 'oo' ngắn hay dài." },
+        { id: 37, type: QuestionType.REARRANGE, parts: ["Mary", "is", "a student", "at", "Oxford Primary School."], answer: "Mary is a student at Oxford Primary School.", exp: "Mary là học sinh trường Oxford.", hint: "Bắt đầu bằng tên riêng 'Mary'." },
+        { id: 38, type: QuestionType.FILL_IN_BLANK, text: "Thank you very m_ _ h.", answer: "much", exp: "Thank you very much: cảm ơn nhiều.", hint: "Từ có 4 chữ cái, mang nghĩa 'rất nhiều'." },
+        { id: 39, type: QuestionType.FILL_IN_BLANK, text: "Her _________ food is ice-cream.", audio: "https://res.ioe.vn/edu/EOlympic/ExamData/ImageExam/2016/12/1/636161990316877921_Audio.mp3", answer: "favourite", exp: "Favourite: yêu thích nhất.", hint: "Từ chỉ sự yêu thích nhất, có 9 chữ cái." },
+        { id: 40, type: QuestionType.FILL_IN_BLANK, text: "Write the sent_ _ ces.", answer: "en", exp: "Sentences: những câu văn.", hint: "Hậu tố để tạo thành số nhiều của 'sentence'." }
       ];
 
       const FINAL_DATA = RAW_QUESTIONS;
 
-      // Helper to shuffle array
       const shuffle = (array) => {
         const arr = [...array];
         for (let i = arr.length - 1; i > 0; i--) {
@@ -127,7 +126,7 @@
         return arr;
       };
 
-      // --- UI COMPONENTS ---
+      // --- COMPONENTS ---
       const Button = ({ children, variant = 'primary', className = '', ...props }) => {
         const variants = {
           primary: "bg-indigo-600 text-white shadow-indigo-100 hover:bg-indigo-700",
@@ -142,54 +141,18 @@
         );
       };
 
-      const Header = ({ timeLeft, score, progress, userName, onOpenList }) => {
-        const mins = Math.floor(timeLeft / 60);
-        const secs = timeLeft % 60;
-        return (
-          <div className="w-full max-w-4xl mx-auto mb-6">
-            <div className="glass rounded-[2rem] p-4 flex flex-wrap items-center justify-between gap-4 shadow-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
-                  {userName[0]?.toUpperCase() || 'U'}
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Người chơi</p>
-                  <p className="text-sm font-bold text-slate-800 truncate max-w-[100px]">{userName}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="text-center">
-                  <p className="text-[10px] font-black text-slate-400 uppercase leading-none">Thời gian</p>
-                  <p className={`text-xl font-black ${timeLeft < 60 ? 'text-rose-500 animate-pulse' : 'text-slate-700'}`}>{mins}:{secs.toString().padStart(2, '0')}</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-[10px] font-black text-slate-400 uppercase leading-none">Điểm số</p>
-                  <p className="text-xl font-black text-indigo-600">{score}</p>
-                </div>
-              </div>
-              <Button variant="outline" className="!px-4 !py-2 !rounded-xl text-xs" onClick={onOpenList}>📋 DANH SÁCH</Button>
-            </div>
-            <div className="mt-4 px-2">
-              <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                <div className="h-full bg-indigo-500 transition-all duration-500" style={{ width: `${progress}%` }}></div>
-              </div>
-            </div>
-          </div>
-        );
-      };
-
       const QuestionContent = ({ question, onAnswer, isAnswered, userAnswer }) => {
         const [fibInput, setFibInput] = useState('');
         const [reParts, setReParts] = useState([]);
         const [showHint, setShowHint] = useState(false);
 
-        // Jumble the parts for rearrangement questions
+        // Jumble rearrangement parts specifically for this question instance
         const jumbledParts = useMemo(() => {
           if (question.type === QuestionType.REARRANGE && question.parts) {
             return shuffle(question.parts);
           }
           return [];
-        }, [question.id, question.parts]);
+        }, [question.id]);
 
         useEffect(() => {
           setFibInput('');
@@ -225,12 +188,15 @@
                 <span className="bg-slate-100 text-slate-500 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">
                   {question.type === 'MC' ? 'Trắc nghiệm' : question.type === 'FIB' ? 'Điền từ' : 'Sắp xếp'}
                 </span>
-                <button onClick={() => setShowHint(!showHint)} className="text-[10px] font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-lg border border-amber-100">
+                <button 
+                  onClick={() => setShowHint(!showHint)} 
+                  className={`text-[10px] font-bold px-3 py-1 rounded-lg border transition-all ${showHint ? 'bg-amber-500 text-white border-amber-600' : 'text-amber-600 bg-amber-50 border-amber-100'}`}
+                >
                   {showHint ? 'ẨN GỢI Ý' : 'GỢI Ý 💡'}
                 </button>
               </div>
 
-              {question.img && <img src={question.img} className="w-full h-48 object-cover rounded-3xl mb-6 shadow-md" alt="minh họa" />}
+              {question.img && <img src={question.img} className="w-full h-48 object-cover rounded-3xl mb-6 shadow-md border border-slate-100" alt="minh họa" />}
               
               {question.audio && (
                 <div className="mb-6 flex justify-center">
@@ -241,13 +207,16 @@
               )}
 
               {showHint && !isAnswered && (
-                <div className="mb-6 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-xl text-amber-900 font-bold text-sm">
-                  ✨ Gợi ý: {question.answer[0]}... ({question.answer.length} ký tự)
+                <div className="mb-6 p-5 bg-amber-50 border-l-8 border-amber-400 rounded-2xl text-amber-900 font-bold text-base shadow-sm animate-slide-up">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xl">💡</span> <span className="text-xs uppercase font-black opacity-60">Gợi ý chi tiết:</span>
+                  </div>
+                  {question.hint || `Đáp án có ${question.answer.length} ký tự.`}
                 </div>
               )}
 
               <h2 className="text-3xl font-nunito font-black text-slate-800 mb-8 leading-tight text-center">
-                {question.text || 'Sắp xếp các từ sau:'}
+                {question.text || 'Sắp xếp các từ sau thành câu đúng:'}
               </h2>
 
               {question.type === QuestionType.MULTIPLE_CHOICE && (
@@ -259,7 +228,7 @@
                     if (isAnswered) {
                         if (isCorr) cls = "bg-emerald-50 border-emerald-500 text-emerald-900 ring-4 ring-emerald-100";
                         else if (isSelected) cls = "bg-rose-50 border-rose-500 text-rose-900 ring-4 ring-rose-100";
-                        else cls = "opacity-40 border-slate-100 grayscale";
+                        else cls = "opacity-40 border-slate-100 grayscale pointer-events-none";
                     }
                     return (
                       <button key={i} onClick={() => !isAnswered && onAnswer(opt)} disabled={isAnswered} className={`w-full p-5 rounded-2xl text-left border-2 transition-all flex items-center gap-4 ${cls}`}>
@@ -283,7 +252,7 @@
                     onKeyDown={handleKeyDown}
                     disabled={isAnswered} 
                     autoFocus
-                    className={`w-full p-6 rounded-3xl border-4 text-3xl font-black text-center outline-none transition-all ${isAnswered ? (isCorrect ? 'border-emerald-500 bg-emerald-50' : 'border-rose-500 bg-rose-50') : 'border-slate-100 bg-slate-50 focus:border-indigo-500 focus:bg-white'}`} 
+                    className={`w-full p-6 rounded-3xl border-4 text-3xl font-black text-center outline-none transition-all ${isAnswered ? (isCorrect ? 'border-emerald-500 bg-emerald-50 text-emerald-800' : 'border-rose-500 bg-rose-50 text-rose-800') : 'border-slate-100 bg-slate-50 focus:border-indigo-500 focus:bg-white focus:ring-8 focus:ring-indigo-100'}`} 
                   />
                   {!isAnswered && <Button onClick={checkAnswer} className="w-full !py-5 text-xl" disabled={!fibInput.trim()}>XÁC NHẬN (ENTER)</Button>}
                 </div>
@@ -291,36 +260,44 @@
 
               {question.type === QuestionType.REARRANGE && (
                 <div className="space-y-6">
-                  <div className="flex flex-wrap gap-2 p-4 bg-slate-50 rounded-2xl border border-slate-200 min-h-[80px] justify-center items-center">
+                  <div className="flex flex-wrap gap-2.5 p-5 bg-slate-50 rounded-2xl border border-slate-200 min-h-[100px] justify-center items-center shadow-inner">
                     {jumbledParts.map((p, i) => (
-                      <button key={i} onClick={() => toggleRePart(p)} disabled={isAnswered || reParts.includes(p)} className={`px-4 py-2 rounded-xl bg-white border-2 border-slate-100 font-bold shadow-sm transition-all ${reParts.includes(p) ? 'opacity-20 scale-95' : 'hover:border-indigo-400 hover:text-indigo-600'}`}>{p}</button>
+                      <button key={i} onClick={() => toggleRePart(p)} disabled={isAnswered || reParts.includes(p)} className={`px-5 py-3 rounded-xl bg-white border-2 border-slate-200 font-black text-lg shadow-sm transition-all active:scale-90 ${reParts.includes(p) ? 'opacity-20 scale-95' : 'hover:border-indigo-400 hover:text-indigo-600'}`}>{p}</button>
                     ))}
                   </div>
-                  <div className={`min-h-[100px] p-6 rounded-3xl border-4 border-dashed flex flex-wrap gap-2 justify-center items-center ${isAnswered ? (isCorrect ? 'border-emerald-500 bg-emerald-50' : 'border-rose-500 bg-rose-50') : 'border-slate-200 bg-white'}`}>
-                    {reParts.length === 0 && !isAnswered && <span className="text-slate-300 font-bold">Chọn từ phía trên để xếp câu...</span>}
+                  <div className={`min-h-[120px] p-6 rounded-[2rem] border-4 border-dashed flex flex-wrap gap-3 justify-center items-center transition-all ${isAnswered ? (isCorrect ? 'border-emerald-500 bg-emerald-50' : 'border-rose-500 bg-rose-50') : 'border-slate-200 bg-white'}`}>
+                    {reParts.length === 0 && !isAnswered && <span className="text-slate-300 font-bold italic">Bấm chọn các từ vựng phía trên...</span>}
                     {reParts.map((p, i) => (
-                      <button key={i} onClick={() => toggleRePart(p)} disabled={isAnswered} className="bg-indigo-600 text-white px-4 py-2 rounded-xl font-bold shadow-lg animate-slide-up">{p}</button>
+                      <button key={i} onClick={() => toggleRePart(p)} disabled={isAnswered} className="bg-indigo-600 text-white px-5 py-3 rounded-xl font-black text-lg shadow-lg animate-slide-up">{p}</button>
                     ))}
                   </div>
                   {!isAnswered && (
-                    <div className="flex gap-3">
-                      <Button variant="outline" onClick={() => setReParts([])} className="flex-1">LÀM LẠI</Button>
-                      <Button onClick={checkAnswer} className="flex-[2] !py-5 text-xl" disabled={reParts.length === 0}>XÁC NHẬN (ENTER)</Button>
+                    <div className="flex gap-4">
+                      <Button variant="outline" onClick={() => setReParts([])} className="flex-1 !rounded-2xl">LÀM LẠI</Button>
+                      <Button onClick={checkAnswer} className="flex-[2] !py-5 text-xl !rounded-2xl" disabled={reParts.length === 0}>XÁC NHẬN (ENTER)</Button>
                     </div>
                   )}
                 </div>
               )}
 
               {isAnswered && (
-                <div className={`mt-8 p-6 rounded-3xl border-l-[10px] shadow-lg animate-slide-in ${isCorrect ? 'bg-emerald-50 border-emerald-500' : 'bg-rose-50 border-rose-500'}`}>
-                  <div className="flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white text-2xl font-black ${isCorrect ? 'bg-emerald-500' : 'bg-rose-500'}`}>
+                <div className={`mt-8 p-6 rounded-3xl border-l-[12px] shadow-lg animate-slide-in ${isCorrect ? 'bg-emerald-50 border-emerald-500' : 'bg-rose-50 border-rose-500'}`}>
+                  <div className="flex items-start gap-5">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white text-3xl font-black shadow-md ${isCorrect ? 'bg-emerald-500' : 'bg-rose-500'}`}>
                       {isCorrect ? '✓' : '✕'}
                     </div>
-                    <div>
-                      <h3 className={`text-xl font-black mb-1 ${isCorrect ? 'text-emerald-800' : 'text-rose-800'}`}>{isCorrect ? 'XUẤT SẮC!' : 'TIẾC QUÁ!'}</h3>
-                      {!isCorrect && <p className="text-xl font-black text-slate-800 mb-2">Đáp án đúng: {question.answer}</p>}
-                      <p className="text-slate-600 font-bold"><span className="text-indigo-600 text-xs font-black mr-2 uppercase">Giải thích:</span>{question.exp}</p>
+                    <div className="flex-1">
+                      <h3 className={`text-2xl font-black mb-2 ${isCorrect ? 'text-emerald-800' : 'text-rose-800'}`}>{isCorrect ? 'CHÍNH XÁC!' : 'SAI MẤT RỒI!'}</h3>
+                      {!isCorrect && (
+                        <div className="mb-3 p-3 bg-white/80 rounded-xl border border-rose-100">
+                           <p className="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-1">Đáp án đúng là:</p>
+                           <p className="text-xl font-black text-slate-800 leading-tight">{question.answer}</p>
+                        </div>
+                      )}
+                      <p className="text-slate-700 font-bold leading-relaxed">
+                        <span className="text-indigo-600 text-xs font-black mr-2 uppercase bg-indigo-50 px-2 py-0.5 rounded">Giải thích:</span>
+                        {question.exp}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -334,13 +311,19 @@
         const [name, setName] = useState(localStorage.getItem('ioe_name') || '');
         return (
           <div className="min-h-screen flex items-center justify-center bg-indigo-600 p-6 relative overflow-hidden">
-            <div className="bg-white rounded-[3.5rem] shadow-2xl p-10 sm:p-16 max-w-xl w-full text-center relative z-10">
-              <span className="text-7xl mb-6 block animate-float">🚀</span>
+             <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <div className="grid grid-cols-10 gap-4">
+                  {Array.from({length: 100}).map((_, i) => <span key={i} className="text-white text-4xl">ABC</span>)}
+                </div>
+             </div>
+            <div className="bg-white rounded-[3.5rem] shadow-2xl p-10 sm:p-16 max-w-xl w-full text-center relative z-10 border-8 border-white">
+              <span className="text-8xl mb-8 block animate-float">🎓</span>
               <h1 className="text-5xl font-nunito font-black text-slate-800 mb-2 tracking-tighter">IOE LỚP 4</h1>
-              <p className="text-slate-400 font-black uppercase tracking-widest text-xs mb-10">BỘ ĐỀ SỐ 09 - 200 CÂU</p>
-              <form onSubmit={e => { e.preventDefault(); name.trim() && onStart(name); }} className="space-y-6">
-                <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="NHẬP TÊN CỦA BẠN" required className="w-full px-6 py-5 rounded-3xl border-4 border-slate-100 text-2xl font-black text-center outline-none focus:border-indigo-500 transition-all uppercase" />
-                <Button type="submit" className="w-full !py-6 text-2xl !rounded-3xl">BẮT ĐẦU NGAY</Button>
+              <p className="text-slate-400 font-black uppercase tracking-widest text-sm mb-12">BỘ ĐỀ ÔN TẬP SỐ 09 - 200 CÂU</p>
+              <form onSubmit={e => { e.preventDefault(); name.trim() && onStart(name); }} className="space-y-6 text-left">
+                <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-4">Tên người chơi:</label>
+                <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="NHẬP TÊN CỦA BẠN" required className="w-full px-8 py-6 rounded-3xl border-4 border-slate-100 text-2xl font-black text-center outline-none focus:border-indigo-500 transition-all uppercase shadow-inner" />
+                <Button type="submit" className="w-full !py-7 text-2xl !rounded-[2rem] shadow-xl">VÀO THI NGAY</Button>
               </form>
             </div>
           </div>
@@ -355,56 +338,67 @@
         const wrongOnes = userAnswers.filter(a => !a.isCorr);
 
         useEffect(() => {
-          if (percent > 70) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+          if (percent > 70) confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 } });
         }, []);
 
         return (
           <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 py-12">
-            <div className="bg-white rounded-[3rem] p-10 sm:p-16 shadow-2xl text-center max-w-2xl w-full border-4 border-white">
-              <span className="text-8xl mb-6 block"> {percent > 80 ? '🏆' : percent > 50 ? '🥈' : '🥉'} </span>
-              <h2 className="text-4xl font-black text-slate-800 mb-2 uppercase">HOÀN THÀNH!</h2>
-              <p className="text-slate-400 font-bold uppercase tracking-widest text-sm mb-8">Người chơi: <span className="text-indigo-600">{userName}</span></p>
+            <div className="bg-white rounded-[4rem] p-10 sm:p-16 shadow-2xl text-center max-w-3xl w-full border-4 border-white animate-slide-in">
+              <span className="text-8xl mb-8 block"> {percent > 85 ? '🌟' : percent > 50 ? '🍀' : '💪'} </span>
+              <h2 className="text-5xl font-nunito font-black text-slate-800 mb-2 uppercase">KẾT QUẢ</h2>
+              <p className="text-slate-400 font-bold uppercase tracking-widest text-sm mb-10">Người chơi: <span className="text-indigo-600">{userName}</span></p>
               
-              <div className="grid grid-cols-2 gap-4 mb-10">
-                <div className="bg-indigo-50 p-8 rounded-3xl border border-indigo-100 flex flex-col items-center">
-                    <p className="text-4xl font-black text-indigo-600">{score}</p>
-                    <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mt-1">Tổng Điểm</p>
+              <div className="grid grid-cols-2 gap-6 mb-12">
+                <div className="bg-indigo-50 p-10 rounded-[3rem] border border-indigo-100 flex flex-col items-center shadow-sm">
+                    <p className="text-5xl font-black text-indigo-600">{score}</p>
+                    <p className="text-[11px] font-black text-indigo-400 uppercase tracking-widest mt-2">Tổng Điểm</p>
                 </div>
-                <div className="bg-emerald-50 p-8 rounded-3xl border border-emerald-100 flex flex-col items-center">
-                    <p className="text-4xl font-black text-emerald-600">{percent}%</p>
-                    <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mt-1">Chính xác</p>
+                <div className="bg-emerald-50 p-10 rounded-[3rem] border border-emerald-100 flex flex-col items-center shadow-sm">
+                    <p className="text-5xl font-black text-emerald-600">{percent}%</p>
+                    <p className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mt-2">Độ chính xác</p>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                <Button onClick={onRetryAll} className="flex-1 !py-5 text-xl !rounded-2xl">LÀM LẠI TẤT CẢ</Button>
+                <Button onClick={onRetryAll} className="flex-1 !py-6 text-xl !rounded-[2rem]">CHƠI LẠI TỪ ĐẦU</Button>
                 {wrongOnes.length > 0 && (
-                  <Button onClick={onRetryWrong} variant="danger" className="flex-1 !py-5 text-xl !rounded-2xl">LÀM LẠI CÂU SAI</Button>
+                  <Button onClick={onRetryWrong} variant="danger" className="flex-1 !py-6 text-xl !rounded-[2rem]">LÀM LẠI CÂU SAI</Button>
                 )}
-                <Button onClick={() => setShowReview(!showReview)} variant="outline" className="flex-1 !py-5 text-xl !rounded-2xl">
-                  {showReview ? 'ĐÓNG XEM LẠI' : 'XEM LẠI CÂU SAI'}
+                <Button onClick={() => setShowReview(!showReview)} variant="outline" className="flex-1 !py-6 text-xl !rounded-[2rem]">
+                  {showReview ? 'ĐÓNG XEM LẠI' : 'ÔN TẬP CÂU SAI'}
                 </Button>
               </div>
 
               {showReview && (
-                <div className="text-left space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar border-t pt-6">
-                  <h3 className="text-xl font-black text-slate-800 uppercase mb-4">Các câu trả lời sai:</h3>
+                <div className="text-left space-y-5 max-h-[500px] overflow-y-auto pr-3 custom-scrollbar border-t-2 pt-8">
+                  <h3 className="text-2xl font-black text-slate-800 uppercase mb-6 flex items-center gap-3">
+                    <span className="w-10 h-10 bg-rose-500 text-white rounded-xl flex items-center justify-center text-sm">!</span> 
+                    Danh sách câu sai:
+                  </h3>
                   {wrongOnes.map((ans, idx) => {
                     const q = FINAL_DATA.find(x => x.id === ans.qId);
                     return q ? (
-                      <div key={idx} className="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                        <p className="font-bold text-slate-800 mb-2">Câu {q.id}: {q.text || 'Sắp xếp câu'}</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-2">
-                          <div>
-                            <p className="text-[10px] font-bold text-rose-400 uppercase">Bạn trả lời:</p>
-                            <p className="font-bold text-rose-900">{ans.resp || "(Bỏ trống)"}</p>
+                      <div key={idx} className="bg-white p-6 rounded-3xl border-2 border-slate-100 hover:border-indigo-200 transition-all shadow-sm">
+                        <div className="flex justify-between items-start mb-3">
+                           <span className="text-[10px] font-black px-3 py-1 bg-slate-100 text-slate-500 rounded-lg uppercase">Câu hỏi {q.id}</span>
+                        </div>
+                        <p className="font-black text-slate-800 mb-4 text-xl leading-snug">{q.text || 'Sắp xếp câu:'} {q.type === QuestionType.REARRANGE && <span className="text-slate-400 font-medium italic text-sm">({q.answer})</span>}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-4">
+                          <div className="p-4 bg-rose-50 rounded-2xl border border-rose-100">
+                            <p className="text-[10px] font-bold text-rose-400 uppercase tracking-wider mb-1">Câu trả lời của bạn:</p>
+                            <p className="font-black text-rose-900 text-lg">{ans.resp || "(Bỏ trống)"}</p>
                           </div>
-                          <div>
-                            <p className="text-[10px] font-bold text-emerald-400 uppercase">Đáp án đúng:</p>
-                            <p className="font-bold text-emerald-900">{q.answer}</p>
+                          <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                            <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-1">Đáp án chính xác:</p>
+                            <p className="font-black text-emerald-900 text-lg">{q.answer}</p>
                           </div>
                         </div>
-                        <p className="text-xs text-slate-500 italic mt-2"><span className="font-bold text-indigo-600 not-italic uppercase mr-1">Giải thích:</span> {q.exp}</p>
+                        <div className="p-4 bg-indigo-50/50 rounded-2xl">
+                           <p className="text-sm text-slate-600 font-bold leading-relaxed">
+                            <span className="font-black text-indigo-600 text-[10px] uppercase mr-2 bg-indigo-100 px-2 py-0.5 rounded">Giải thích:</span> 
+                            {q.exp}
+                           </p>
+                        </div>
                       </div>
                     ) : null;
                   })}
@@ -481,39 +475,79 @@
 
         return (
           <div className="min-h-screen bg-slate-50 flex flex-col p-4 pb-32">
-            <Header timeLeft={timeLeft} score={score} progress={progress} userName={userName} onOpenList={() => setShowList(true)} />
+            <div className="w-full max-w-4xl mx-auto mb-6">
+              <div className="glass rounded-[2rem] p-4 flex flex-wrap items-center justify-between gap-4 shadow-xl border-4 border-white">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-lg">
+                    {userName[0]?.toUpperCase() || 'U'}
+                  </div>
+                  <div className="hidden sm:block">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Người chơi</p>
+                    <p className="text-lg font-black text-slate-800 truncate max-w-[120px]">{userName}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-8">
+                  <div className="text-center">
+                    <p className="text-[10px] font-black text-slate-400 uppercase leading-none">Thời gian</p>
+                    <p className={`text-2xl font-black ${timeLeft < 60 ? 'text-rose-500 animate-pulse' : 'text-slate-800'}`}>
+                      {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-[10px] font-black text-slate-400 uppercase leading-none">Điểm</p>
+                    <p className="text-2xl font-black text-indigo-600">{score}</p>
+                  </div>
+                </div>
+                <Button variant="outline" className="!px-5 !py-3 !rounded-2xl text-xs !border-slate-100 shadow-sm" onClick={() => setShowList(true)}>📋 DANH SÁCH</Button>
+              </div>
+              <div className="mt-5 px-3">
+                <div className="w-full h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                  <div className="h-full bg-gradient-to-r from-indigo-500 to-indigo-700 transition-all duration-700 ease-out" style={{ width: `${progress}%` }}></div>
+                </div>
+              </div>
+            </div>
+
             <QuestionContent question={currentQ} onAnswer={handleAnswer} isAnswered={!!answer} userAnswer={answer?.resp} />
-            <div className="fixed bottom-0 left-0 right-0 p-6 bg-white/80 backdrop-blur-md border-t border-slate-200 z-50 flex justify-center">
-              <div className="w-full max-w-2xl flex gap-3 items-center">
-                <Button variant="outline" onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))} disabled={currentIndex === 0} className="!p-4 !rounded-2xl shrink-0">←</Button>
+            
+            <div className="fixed bottom-0 left-0 right-0 p-8 bg-white/80 backdrop-blur-xl border-t border-slate-200 z-50 flex justify-center shadow-2xl">
+              <div className="w-full max-w-2xl flex gap-4 items-center">
+                <Button variant="outline" onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))} disabled={currentIndex === 0} className="!p-5 !rounded-2xl shrink-0 border-2">←</Button>
                 <div className="flex-1">
                   {answer ? (
-                    <Button onClick={() => currentIndex === activeQuestions.length - 1 ? setGameState(GameState.FINISHED) : setCurrentIndex(currentIndex + 1)} className="w-full !py-5 text-xl !rounded-2xl" variant="secondary">
+                    <Button onClick={() => currentIndex === activeQuestions.length - 1 ? setGameState(GameState.FINISHED) : setCurrentIndex(currentIndex + 1)} className="w-full !py-5 text-2xl !rounded-2xl shadow-indigo-200" variant="secondary">
                         {currentIndex === activeQuestions.length - 1 ? 'XEM KẾT QUẢ 🏁' : 'CÂU TIẾP THEO →'}
                     </Button>
                   ) : (
-                    <Button onClick={() => setCurrentIndex(Math.min(activeQuestions.length - 1, currentIndex + 1))} variant="outline" className="w-full !py-5 !rounded-2xl font-black text-slate-400">BỎ QUA CÂU NÀY</Button>
+                    <Button onClick={() => setCurrentIndex(Math.min(activeQuestions.length - 1, currentIndex + 1))} variant="outline" className="w-full !py-5 !rounded-2xl font-black text-slate-300 border-dashed hover:border-indigo-400 hover:text-indigo-400">BỎ QUA CÂU NÀY</Button>
                   )}
                 </div>
-                <Button variant="outline" onClick={() => setCurrentIndex(Math.min(activeQuestions.length - 1, currentIndex + 1))} disabled={currentIndex === activeQuestions.length - 1 || !answer} className="!p-4 !rounded-2xl shrink-0">→</Button>
+                <Button variant="outline" onClick={() => setCurrentIndex(Math.min(activeQuestions.length - 1, currentIndex + 1))} disabled={currentIndex === activeQuestions.length - 1 || !answer} className="!p-5 !rounded-2xl shrink-0 border-2">→</Button>
               </div>
             </div>
 
             {showList && (
-              <div className="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-                <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col overflow-hidden animate-slide-up">
-                    <div className="p-6 border-b flex justify-between items-center bg-slate-50">
-                        <h2 className="text-2xl font-black text-slate-800 uppercase">DANH SÁCH CÂU HỎI</h2>
-                        <button onClick={() => setShowList(false)} className="text-2xl font-black text-slate-400 hover:text-rose-500 transition-colors">✕</button>
+              <div className="fixed inset-0 z-[100] bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4">
+                <div className="bg-white rounded-[3rem] shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden animate-slide-up border-8 border-white">
+                    <div className="p-8 border-b flex justify-between items-center bg-slate-50">
+                        <div>
+                           <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tighter">DANH SÁCH CÂU HỎI</h2>
+                           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{activeQuestions.length} CÂU TRONG LƯỢT THI NÀY</p>
+                        </div>
+                        <button onClick={() => setShowList(false)} className="w-12 h-12 flex items-center justify-center text-3xl font-black text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-all">✕</button>
                     </div>
-                    <div className="flex-1 overflow-y-auto p-6 grid grid-cols-5 sm:grid-cols-10 gap-2 custom-scrollbar">
+                    <div className="flex-1 overflow-y-auto p-8 grid grid-cols-5 sm:grid-cols-10 gap-3 custom-scrollbar bg-white shadow-inner">
                         {activeQuestions.map((q, i) => {
                             const ans = userAnswers.find(a => a.qId === q.id);
-                            let cls = "bg-slate-100 text-slate-400";
-                            if (i === currentIndex) cls = "ring-4 ring-indigo-500 bg-white text-indigo-600 border-indigo-500";
-                            else if (ans) cls = ans.isCorr ? "bg-emerald-500 text-white" : "bg-rose-500 text-white";
-                            return <button key={i} onClick={() => onJump(i)} className={`h-10 rounded-lg font-black text-sm border-2 transition-all ${cls}`}>{q.id}</button>
+                            let cls = "bg-slate-50 text-slate-300 border-slate-100 hover:border-indigo-200";
+                            if (i === currentIndex) cls = "ring-4 ring-indigo-500 bg-white text-indigo-600 border-indigo-500 scale-110 z-10";
+                            else if (ans) cls = ans.isCorr ? "bg-emerald-500 text-white border-emerald-600" : "bg-rose-500 text-white border-rose-600";
+                            return <button key={i} onClick={() => onJump(i)} className={`h-14 rounded-2xl font-black text-lg border-2 transition-all transform active:scale-95 ${cls}`}>{q.id}</button>
                         })}
+                    </div>
+                    <div className="p-4 bg-slate-50 border-t text-[10px] font-black text-slate-400 flex gap-8 justify-center uppercase tracking-widest">
+                       <div className="flex items-center gap-2"><span className="w-4 h-4 bg-emerald-500 rounded-lg"></span> Đúng</div>
+                       <div className="flex items-center gap-2"><span className="w-4 h-4 bg-rose-500 rounded-lg"></span> Sai</div>
+                       <div className="flex items-center gap-2"><span className="w-4 h-4 bg-slate-200 rounded-lg"></span> Chưa làm</div>
                     </div>
                 </div>
               </div>

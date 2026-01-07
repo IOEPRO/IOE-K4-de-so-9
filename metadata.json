@@ -1,0 +1,7 @@
+{
+  "name": "BỘ ĐỀ ÔN IOE LỚP 4 SỐ: 09",
+  "description": "Luyện thi Tiếng Anh IOE Lớp 4 - Đề số 09. Hỗ trợ phím Enter, chế độ làm lại câu sai và giao diện tiếng Việt tối ưu.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

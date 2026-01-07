@@ -1,6 +1,6 @@
 {
-  "name": "BỘ ĐỀ ÔN IOE LỚP 4 SỐ: 09",
-  "description": "Luyện thi Tiếng Anh IOE Lớp 4 - Đề số 09. Hỗ trợ phím Enter, chế độ làm lại câu sai và giao diện tiếng Việt tối ưu.",
+  "name": "IOE LỚP 4 - ĐỀ SỐ 09 (200 CÂU)",
+  "description": "Luyện thi Tiếng Anh IOE Lớp 4 - Đề số 09 với đầy đủ 200 câu hỏi. Hệ thống hỗ trợ phím Enter, gợi ý chi tiết và chế độ ôn tập câu sai.",
   "requestFramePermissions": [
     "microphone"
   ]
